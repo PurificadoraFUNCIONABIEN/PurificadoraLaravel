@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('estado');
 
             $table->foreign('idRuta')->references('idRuta')->on('rutas')->onDelete('cascade');
-            $table->foreign('idCliente')->references('idCliente')->on('Cliente')->onDelete('cascade');
+            $table->foreign('idCliente')->references('idCliente')->on('clientes')->onDelete('cascade');
 
             $table->timestamps();
         });

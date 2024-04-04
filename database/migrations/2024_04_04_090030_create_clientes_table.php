@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('direccion');
             $table->integer('telefono')->max(10);
 
-            $table->foreign('idUsusario')->references('idUsuario')->on('usuarios')->onDelete('cascade');
+            $table->foreign('idUsuario')->references('idUsuario')->on('usuarios')->onDelete('cascade');
 
             $table->timestamps();
         });

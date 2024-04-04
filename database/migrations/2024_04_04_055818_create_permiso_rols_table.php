@@ -17,7 +17,7 @@ return new class extends Migration
 
 
             $table->unsignedBigInteger('idRol'); // Esto creará una columna `user_id` para almacenar el ID del usuario
-            $table->foreign('idRol')->references('idRol')->on('rol')->onDelete('cascade'); // Esto agrega una restricción de clave externa que hace referencia a la columna `user_id` en la tabla `users`
+            $table->foreign('idRol')->references('idRol')->on('rols')->onDelete('cascade'); // Esto agrega una restricción de clave externa que hace referencia a la columna `user_id` en la tabla `users`
 
             $table->timestamps();
         });

@@ -1,0 +1,34 @@
+[33mcommit f312b991c3321956abdcf48e1252250a55fcfa44[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;32mprueba[m[33m)[m
+Author: Angel Adonnis <tonyperezp@gmial.com>
+Date:   Thu Apr 4 03:15:38 2024 -0600
+
+    pedidos y clientes
+
+[33mcommit bc2a751b4508db1f2beb08636492a6b5a98fc8dd[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: edgar1223 <48036816+edgar1223@users.noreply.github.com>
+Date:   Thu Apr 4 00:27:18 2024 -0600
+
+    Update .env.example
+    
+    Signed-off-by: edgar1223 <48036816+edgar1223@users.noreply.github.com>
+
+[33mcommit 5056eb1b227357b798ce52c5137f61b78e7a777d[m
+Merge: b914418 a53809e
+Author: edgar1223 <48036816+edgar1223@users.noreply.github.com>
+Date:   Thu Apr 4 00:25:35 2024 -0600
+
+    Merge pull request #1 from edgar1223/main
+    
+    modelo: user, rol y permisos
+
+[33mcommit a53809e41c553bda1923c886311738f6e42bca5e[m
+Author: edgar1223 <brenedgar12@gmail.com>
+Date:   Thu Apr 4 00:23:59 2024 -0600
+
+    modelo: user, rol y permisos
+
+[33mcommit b9144188fa80e6e7e4c07bcd46b35e3c04621dfc[m
+Author: Angel Adonnis <tonyperezp@gmial.com>
+Date:   Fri Mar 15 10:30:47 2024 -0600
+
+    inicio
