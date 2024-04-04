@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ruta extends Model
+class TipoBotellon extends Model
 {
     use HasFactory;
 
-    public function carros(){
-        return $this->belongsToMany(Carro::class);
+    public function garrafones(){
+        return $this->hasMany(Garrafon::class);
     }
 
     public function pedidos(){
-        return $this->hasMany(Pedido::class);
+        return $this->belongsToMany(Pedido::class);
     }
 }

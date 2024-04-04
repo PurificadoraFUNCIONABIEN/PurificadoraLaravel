@@ -16,4 +16,12 @@ class Pedido extends Model
     {
         return $this->belongsTo(Cliente::class);
     }
+
+    public function tiposbotellones(){
+        return $this->belongsToMany(TipoBotellon::class);
+    }
+
+    public function ruta(){
+        return $this->belongsTo(Ruta::class);
+    }
 }
