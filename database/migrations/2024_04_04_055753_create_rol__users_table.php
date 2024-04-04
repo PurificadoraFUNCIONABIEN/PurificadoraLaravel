@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('rol_users', function (Blueprint $table) {
             $table->unsignedBigInteger('idRol'); // Esto creará una columna `user_id` para almacenar el ID del usuario
-            $table->foreign('idRol')->references('idRol')->on('rol')->onDelete('cascade'); // Esto agrega una restricción de clave externa que hace referencia a la columna `user_id` en la tabla `users`
+            $table->foreign('idRol')->references('idRol')->on('rols')->onDelete('cascade'); // Esto agrega una restricción de clave externa que hace referencia a la columna `user_id` en la tabla `users`
 
 
             $table->unsignedBigInteger('idUsuario'); // Esto creará una columna `user_id` para almacenar el ID del usuario
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rol__users');
+        Schema::dropIfExists('rol_users');
     }
 };
