@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('idCliente');
             $table->date('fechaPedido');
             $table->double('cantidadLitros',5,2);
-            $table->text('estado');
+            $table->string('estado');
 
             $table->foreign('idRuta')->references('idRuta')->on('rutas')->onDelete('cascade');
             $table->foreign('idCliente')->references('idCliente')->on('clientes')->onDelete('cascade');
