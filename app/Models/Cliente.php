@@ -13,4 +13,9 @@ class Cliente extends Model
     {
         return $this->hasMany(Pedido::class);
     }
+
+    public function usuarios(): HasMany
+    {
+        return $this->hasMany(Usuario::class);
+    }
 }

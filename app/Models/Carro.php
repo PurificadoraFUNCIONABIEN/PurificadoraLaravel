@@ -12,4 +12,9 @@ class Carro extends Model
     public function rutas(){
         return $this->belongsToMany(Ruta::class);
     }
+
+    public function conductores(): BelongsToMany
+    {
+        return $this->belongsToMany(Conductor::class, 'CarroConductor', 'idConductor', 'idCarro');
+    }
 }
