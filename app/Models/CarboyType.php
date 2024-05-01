@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Sanctum\HasApiTokens;
 
 class CarboyType extends Model
 {
     use HasFactory;
+    use HasApiTokens, Notifiable;
 
     public function orders(){
         return $this->belongsToMany(Order::class, 'carboy_orders', 'order_id', 'carboyType_id');
