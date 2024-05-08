@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('two_factor_secret')->nullable(); // Sin la cláusula after
+            $table->string('two_factor_recovery_codes')->nullable(); // Sin la cláusula after
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
