@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Models\User;
 use App\Http\Controllers\CarboyController;
 use App\Http\Controllers\CarboyOrderController;
 use App\Http\Controllers\CarboyTypeController;
@@ -14,7 +15,7 @@ use App\Http\Controllers\DriverController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RouteController;
 
-Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getUser']);
+//Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getUser']);
 Route::middleware('auth:sanctum')->get('/Carboy', [CarboyController::class, 'getUser']);
 Route::middleware('auth:sanctum')->get('/CarboyOrder', [CarboyOrderController::class, 'getUser']);
 Route::middleware('auth:sanctum')->get('/CarboyType', [CarboyTypeController::class, 'getUser']);
@@ -32,5 +33,10 @@ Route::middleware('auth:sanctum')->get('/Driver', [DriverController::class, 'get
 
 Route::middleware('auth:sanctum')->get('/Order', [OrderController::class, 'getUser']);
 Route::middleware('auth:sanctum')->get('/Route', [RouteController::class, 'getUser']);
+
+
+//por luis
+Route::post('/validar', [UserController::class, 'validarcorreo']);
+Route::post('/userregister', [UserController::class, 'store']);
 
 
