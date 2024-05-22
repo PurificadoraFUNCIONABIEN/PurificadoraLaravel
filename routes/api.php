@@ -54,3 +54,13 @@ Route::middleware('auth:sanctum')->post('/createCar', [CarController::class, 'st
 
 
 
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('drivers', DriverController::class);
+    Route::apiResource('routes', RouteController::class);
+    Route::apiResource('orders', OrderController::class);
+    Route::apiResource('customers', CustomerController::class);
+    Route::apiResource('carboy-orders', CarboyOrderController::class);
+    Route::apiResource('carboy-types', CarboyTypeController::class);
+    Route::apiResource('car-routes', CarRouteController::class);
+    Route::apiResource('car-drivers', CarDriverController::class);
+});
