@@ -15,12 +15,14 @@ use App\Http\Controllers\DriverController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RouteController;
 
+
+//por luis se necesita token
 //Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getUser']);
 Route::middleware('auth:sanctum')->get('/Carboy', [CarboyController::class, 'getUser']);
 Route::middleware('auth:sanctum')->get('/CarboyOrder', [CarboyOrderController::class, 'getUser']);
 Route::middleware('auth:sanctum')->get('/CarboyType', [CarboyTypeController::class, 'getUser']);
 
-Route::middleware('auth:sanctum')->get('/Car', [CarController::class, 'getUser']);
+//Route::middleware('auth:sanctum')->get('/Car', [CarController::class, 'getUser']);
 
 Route::middleware('auth:sanctum')->get('/CarDriver', [CarDriverController::class, 'getUser']);
 
@@ -35,8 +37,20 @@ Route::middleware('auth:sanctum')->get('/Order', [OrderController::class, 'getUs
 Route::middleware('auth:sanctum')->get('/Route', [RouteController::class, 'getUser']);
 
 
-//por luis
+//por luis no se necesita token
 Route::post('/validar', [UserController::class, 'validarcorreo']);
 Route::post('/userregister', [UserController::class, 'store']);
+
+
+//por luis se necesita token
+//listar todos los carros existentes
+Route::middleware('auth:sanctum')->get('/getCar', [CarController::class, 'index']);
+//eliminar un carro
+Route::middleware('auth:sanctum')->delete('/deleteCar/{id}', [CarController::class, 'destroy']);
+//actualizar carro
+Route::middleware('auth:sanctum')->put('/updateCar/{id}', [CarController::class, 'update']);
+//crear carro
+Route::middleware('auth:sanctum')->post('/createCar', [CarController::class, 'store']);
+
 
 

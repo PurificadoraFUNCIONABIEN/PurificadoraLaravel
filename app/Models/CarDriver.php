@@ -9,6 +9,6 @@ use Laravel\Sanctum\HasApiTokens;
 class CarDriver extends Model
 {
     use HasFactory;
-    use HasApiTokens, Notifiable;
+    use HasApiTokens;
 
 }
