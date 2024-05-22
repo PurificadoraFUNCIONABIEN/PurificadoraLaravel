@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+
 class Route extends Model
 {
     use HasFactory;
@@ -16,5 +18,8 @@ class Route extends Model
     public function orders(){
         return $this->hasMany(Order::class);
     }
-
+    protected $fillable = [
+        
+        'route_name'
+    ];
 }
