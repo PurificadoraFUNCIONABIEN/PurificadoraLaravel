@@ -9,7 +9,7 @@ use Laravel\Sanctum\HasApiTokens;
 class Car extends Model
 {
     use HasFactory;
-    use HasApiTokens, Notifiable;
+    use HasApiTokens;
 
     public function routes(){
         return $this->belongsToMany(Route::class);
