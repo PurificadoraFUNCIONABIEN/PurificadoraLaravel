@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('routes', function (Blueprint $table) {
             $table->id('id');
             $table->string('route_name');
+            $table->decimal('origin_lat', 10, 8);
+            $table->decimal('origin_lng', 11, 8);
+            $table->decimal('destination_lat', 10, 8);
+            $table->decimal('destination_lng', 11, 8);
             $table->timestamps();
         });
     }

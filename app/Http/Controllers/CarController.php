@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Car;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 
 class CarController extends Controller
@@ -25,11 +26,26 @@ class CarController extends Controller
 //crear un carro
     public function store(Request $request)
     {
-        //
+        
         
         $car = new Car();
         $car->model = $request->input('model');
         $car->capacity = $request->input('capacity');
+        if ($request->has('img_url')) {
+            // Decodificar la imagen base64
+            $imgData = $request->input('img_url');
+            $imgData = substr($imgData, strpos($imgData, ',') + 1); // Eliminar el encabezado data:image/png;base64,
+            $imgData = base64_decode($imgData);
+    
+            // Generar un nombre único para la imagen
+            $imageName = Str::random(10) . '.png';
+    
+            // Guardar la imagen en la carpeta public
+            file_put_contents(public_path('carros/' . $imageName), $imgData);
+    
+            // Asignar la ruta completa de la imagen al usuario
+            $car->img_url = url('cars/' . $imageName);
+         }
         $car->save();
         return response()->json('Carro creado correctamente');
     }

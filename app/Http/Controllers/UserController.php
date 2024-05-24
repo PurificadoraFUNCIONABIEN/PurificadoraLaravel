@@ -27,26 +27,38 @@ class UserController extends Controller
             'email' => 'required|email',
             'password' => 'required'
         ];
+    
+        // Validar los datos de entrada
         $validator = Validator::make($request->input(), $rules);
-
+    
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
                 'errors' => $validator->errors()->all()
             ], 400);
         }
-
+    
+        // Verificar si el correo electrónico ya está registrado
+        $existingUser = User::where('email', $request->input('email'))->first();
+    
+        if ($existingUser) {
+            return response()->json([
+                'status' => false,
+                'message' => 'El correo electrónico ya está registrado.'
+            ], 400);
+        }
+    
+        // Crear un nuevo usuario si el correo electrónico no está registrado
         $user = new User([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
         ]);
         $user->save();
-
-
+    
         return response()->json([
             'status' => true,
-            'message' => 'User created successfully',
+            'message' => 'Usuario creado exitosamente',
         ], 200);
     }
 
