@@ -20,6 +20,10 @@ class Route extends Model
     }
     protected $fillable = [
         
-        'route_name'
+        'route_name',
+        "origin_lat",
+        "origin_lng",
+        "destination_lat",
+        "destination_lng"
     ];
 }

@@ -15,10 +15,15 @@ class RouteController extends Controller
     {
         $validated = $request->validate([
             'route_name' => 'required|string|max:255',
+            'origin_lat' => 'required|numeric',
+            'origin_lng' => 'required|numeric',
+            'destination_lat' => 'required|numeric',
+            'destination_lng' => 'required|numeric',
         ]);
-        
+
         return Route::create($validated);
     }
+
 
     public function show(Route $route)
     {
@@ -29,8 +34,12 @@ class RouteController extends Controller
     {
         $validated = $request->validate([
             'route_name' => 'string|max:255',
+            'origin_lat' => 'numeric',
+            'origin_lng' => 'numeric',
+            'destination_lat' => 'numeric',
+            'destination_lng' => 'numeric',
         ]);
-        
+
         $route->update($validated);
         return $route;
     }
