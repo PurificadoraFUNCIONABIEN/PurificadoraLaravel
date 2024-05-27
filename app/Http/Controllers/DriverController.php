@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Driver;
+
 class DriverController extends Controller
 {
     public function index()
@@ -13,11 +14,12 @@ class DriverController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'license' => 'required|string|max:255',
+        $validatedData = $request->validate([
+            'name',
+            'license',
         ]);
-        
-        return Driver::create($validated);
+
+        Driver::create($validatedData);
     }
 
     public function show(Driver $driver)
@@ -25,19 +27,38 @@ class DriverController extends Controller
         return $driver;
     }
 
-    public function update(Request $request, Driver $driver)
+    public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'license' => 'string|max:255',
-        ]);
-        
-        $driver->update($validated);
-        return $driver;
+        $driver = Driver::findOrFail($id);
+
+
+        $driver->name = $request->input('name');
+        $driver->license = $request->input('license');
+        $driver->save();
+
+        return response()->json('Conductor actualizado correctamente');
     }
 
     public function destroy(Driver $driver)
     {
         $driver->delete();
         return response()->noContent();
+    }
+
+    public function createDriver(Request $request)
+    {
+        // Validar los datos recibidos
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+            'license' => 'required|string',
+        ]);
+
+        // Crear un nuevo conductor
+        $driver = new Driver();
+        $driver->name = $validatedData['name'];
+        $driver->license = $validatedData['license'];
+        $driver->save();
+
+        return response()->json(['message' => 'Conductor creado exitosamente'], 201);
     }
 }

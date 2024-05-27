@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('drivers', function (Blueprint $table) {
             $table->id('id');
+            $table->string('name');
             $table->string('license');
             $table->timestamps();
         });

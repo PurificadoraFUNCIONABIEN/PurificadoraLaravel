@@ -64,3 +64,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('car-routes', CarRouteController::class);
     Route::apiResource('car-drivers', CarDriverController::class);
 });
+
+Route::middleware('auth:sanctum')->post('/createDriver', [DriverController::class, 'createDriver']);

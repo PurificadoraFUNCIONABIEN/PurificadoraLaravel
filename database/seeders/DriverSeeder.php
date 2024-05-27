@@ -15,12 +15,14 @@ class DriverSeeder extends Seeder
     {
         //
         Driver::create([
-            
+            'name' => 'Alan Romeo Domiguez',
             'license' => '122334345'
         ]);
 
         Driver::create([
+            'name' => 'Luis Felipe Ramirez Arreortua',
             'license' => '1223434345'
+            
         ]);
     }
 }
