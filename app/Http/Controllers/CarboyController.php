@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Carboy;
+use App\Models\CarboyType;
 
 class CarboyController extends Controller
 {
@@ -62,5 +63,13 @@ class CarboyController extends Controller
         $carboy->save();
 
         return response()->json(['message' => 'Producto creado exitosamente'], 201);
+    }
+
+
+    public function getA()
+    {
+        $datos = Carboy::with('carboyTypes')->get();
+
+        return response()->json($datos);
     }
 }

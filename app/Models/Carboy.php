@@ -13,7 +13,7 @@ class Carboy extends Model
     use HasApiTokens, Notifiable;
 
     public function carboyTypes(){
-        return $this->belongsTo(CarboyType::class);
+        return $this->belongsTo(CarboyType::class,'carboyType_id');
     }
 
 }
