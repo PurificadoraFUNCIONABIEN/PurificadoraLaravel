@@ -23,7 +23,7 @@ class UserController extends Controller
     {
 
         $rules = [
-            'name' => 'required|string|min:1|max:20',
+            'name' => 'required|string|min:1|max:200',
             'email' => 'required|email',
             'password' => 'required'
         ];

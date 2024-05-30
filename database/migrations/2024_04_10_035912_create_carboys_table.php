@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('carboys', function (Blueprint $table) {
             $table->id('id');
             $table->unsignedBigInteger('carboyType_id');
-            $table->enum('state', ['new', 'pre-owned', 'in good state', 'damaged', 'broken'])->default('new');
+            $table->enum('state', ['nuevo', 'seminuevo', 'buen estado', 'dañado', 'roto'])->default('nuevo');
             $table->string('color');
             $table->foreign('carboyType_id')->references('id')->on('carboy_types')->onDelete('cascade');
             $table->timestamps();

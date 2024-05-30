@@ -60,9 +60,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('orders', OrderController::class);
     Route::apiResource('customers', CustomerController::class);
     Route::apiResource('carboy-orders', CarboyOrderController::class);
+    Route::apiResource('carboy', CarboyController::class);
     Route::apiResource('carboy-types', CarboyTypeController::class);
     Route::apiResource('car-routes', CarRouteController::class);
     Route::apiResource('car-drivers', CarDriverController::class);
 });
 
 Route::middleware('auth:sanctum')->post('/createDriver', [DriverController::class, 'createDriver']);
+Route::middleware('auth:sanctum')->post('/createCarboy', [CarboyController::class, 'createCarboy']);

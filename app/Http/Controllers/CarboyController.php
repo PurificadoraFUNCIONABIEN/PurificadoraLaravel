@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Carboy;
+
 class CarboyController extends Controller
 {
-    
+
     public function index()
     {
         return Carboy::all();
@@ -19,7 +20,7 @@ class CarboyController extends Controller
             'state' => 'required|string|in:new,pre-owned,in good state,damaged,broken',
             'color' => 'required|string|max:255',
         ]);
-        
+
         return Carboy::create($validated);
     }
 
@@ -35,7 +36,7 @@ class CarboyController extends Controller
             'state' => 'string|in:new,pre-owned,in good state,damaged,broken',
             'color' => 'string|max:255',
         ]);
-        
+
         $carboy->update($validated);
         return $carboy;
     }
@@ -44,5 +45,22 @@ class CarboyController extends Controller
     {
         $carboy->delete();
         return response()->noContent();
+    }
+
+    public function createCarboy(Request $request)
+    {
+        $validatedData = $request->validate([
+            'color' => 'required|string',
+            'state' => 'required|in:nuevo,seminuevo,buen estado,dañado,roto',
+            'carboyType_id' => 'required|exists:carboy_types,id',
+        ]);
+
+        $carboy = new Carboy();
+        $carboy->color = $validatedData['color'];
+        $carboy->state = $validatedData['state'];
+        $carboy->carboyType_id = $validatedData['carboyType_id'];
+        $carboy->save();
+
+        return response()->json(['message' => 'Producto creado exitosamente'], 201);
     }
 }
