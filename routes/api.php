@@ -68,7 +68,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::middleware('auth:sanctum')->post('/createDriver', [DriverController::class, 'createDriver']);
 Route::middleware('auth:sanctum')->post('/createCarboy', [CarboyController::class, 'createCarboy']);
+Route::middleware('auth:sanctum')->post('/createCarboyType', [CarboyTypeController::class, 'createCarboyType']);
+
 
 
 Route::middleware('auth:sanctum')->get('/getType', [CarboyController::class, 'getA']);
+Route::middleware('auth:sanctum')->get('/getForane/{id}', [CarboyController::class, 'obtenerLlaveForanea']);
 

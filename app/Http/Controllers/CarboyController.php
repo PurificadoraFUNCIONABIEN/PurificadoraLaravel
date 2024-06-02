@@ -30,22 +30,24 @@ class CarboyController extends Controller
         return $carboy;
     }
 
-    public function update(Request $request, Carboy $carboy)
+    public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'carboyType_id' => 'exists:carboy_types,id',
-            'state' => 'string|in:new,pre-owned,in good state,damaged,broken',
-            'color' => 'string|max:255',
-        ]);
+        $driver = Carboy::findOrFail($id);
 
-        $carboy->update($validated);
-        return $carboy;
+
+        $driver->state = $request->input('state');
+        $driver->color = $request->input('color');
+        $driver->cantidad = $request->input('cantidad');
+        $driver->save();
+
+        return response()->json('Producto actualizado correctamente');
     }
 
-    public function destroy(Carboy $carboy)
+    public function destroy($id)
     {
+        $carboy = Carboy::findOrFail($id);
         $carboy->delete();
-        return response()->noContent();
+        return response()->json(['success' => 'Producto eliminado correctamente']);
     }
 
     public function createCarboy(Request $request)
@@ -53,12 +55,14 @@ class CarboyController extends Controller
         $validatedData = $request->validate([
             'color' => 'required|string',
             'state' => 'required|in:nuevo,seminuevo,buen estado,dañado,roto',
+            'cantidad' => 'required|numeric',
             'carboyType_id' => 'required|exists:carboy_types,id',
         ]);
 
         $carboy = new Carboy();
         $carboy->color = $validatedData['color'];
         $carboy->state = $validatedData['state'];
+        $carboy->cantidad = (float)$validatedData['cantidad'];
         $carboy->carboyType_id = $validatedData['carboyType_id'];
         $carboy->save();
 
@@ -71,5 +75,18 @@ class CarboyController extends Controller
         $datos = Carboy::with('carboyTypes')->get();
 
         return response()->json($datos);
+    }
+
+
+
+    public function obtenerLlaveForanea($driverId)
+    {
+        // Obtener el modelo Carboy por su ID
+        $carboy = Carboy::findOrFail($driverId);
+
+        // Acceder al atributo carboyType_id
+        $carboyTypeId = $carboy->carboyType_id;
+
+        return response()->json($carboyTypeId);
     }
 }
