@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Carboy;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,5 +14,19 @@ class CarboySeeder extends Seeder
     public function run(): void
     {
         //
+        Carboy::create([
+            'state' => 'nuevo',
+            'color' => 'rojo',
+            'cantidad'=>15.7,
+            'carboyType_id'=>2,
+
+        ]);
+
+        Carboy::create([
+            'state' => 'roto',
+            'color' => 'verde',
+            'cantidad'=>22.4,
+            'carboyType_id'=>1,
+        ]);
     }
 }
