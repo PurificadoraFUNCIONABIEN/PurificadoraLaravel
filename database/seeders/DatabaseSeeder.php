@@ -6,7 +6,8 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Database\Seeders\CarSeeder;
-
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -16,16 +17,15 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password'=>'wefwefwe345345',
+        $adminRole = Role::findByName('admin');
+        $adminRole->syncPermissions([
+            'add cars', 'add routes', 'delete routes', 'add products', 'edit products', 'delete products'
         ]);
 
-        $this->call(CarSeeder::class);
-        $this->call(DriverSeeder::class);
-        $this->call(CarboyTypeSeeder::class);
-        $this->call(CarboySeeder::class);
+        $conductorRole = Role::findByName('conductor');
+        $conductorRole->syncPermissions([
+            'edit cars', 'view routes'
+        ]);
 
     }
 }
