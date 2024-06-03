@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Carboy;
 use App\Models\CarboyType;
+use Illuminate\Support\Str;
 
 class CarboyController extends Controller
 {
@@ -57,13 +58,30 @@ class CarboyController extends Controller
             'state' => 'required|in:nuevo,seminuevo,buen estado,dañado,roto',
             'cantidad' => 'required|numeric',
             'carboyType_id' => 'required|exists:carboy_types,id',
-        ]);
+            'img' => 'nullable|string'
 
+        ]);
         $carboy = new Carboy();
         $carboy->color = $validatedData['color'];
         $carboy->state = $validatedData['state'];
         $carboy->cantidad = (float)$validatedData['cantidad'];
-        $carboy->carboyType_id = $validatedData['carboyType_id'];
+        $carboy->carboyType_id = $validatedData['carboyType_id'];;
+        if ($request->has('img')) {
+            // Decodificar la imagen base64
+            $imgData = $request->input('img');
+            $imgData = substr($imgData, strpos($imgData, ',') + 1); // Eliminar el encabezado data:image/png;base64,
+            $imgData = base64_decode($imgData);
+
+            // Generar un nombre único para la imagen
+            $imageName = Str::random(10) . '.png';
+
+            // Guardar la imagen en la carpeta public
+            file_put_contents(public_path('botes/' . $imageName), $imgData);
+
+            // Asignar la ruta completa de la imagen al usuario
+            $carboy->img = url('botes/' . $imageName);
+        }
+       
         $carboy->save();
 
         return response()->json(['message' => 'Producto creado exitosamente'], 201);
