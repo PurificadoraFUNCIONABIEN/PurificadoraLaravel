@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum('state', ['nuevo', 'seminuevo', 'buen estado', 'dañado', 'roto'])->default('nuevo');
             $table->string('color');
             $table->float('cantidad');
+            $table->string('img');
             $table->foreign('carboyType_id')->references('id')->on('carboy_types')->onDelete('cascade');
             $table->timestamps();
         });
