@@ -7,10 +7,13 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use  Illuminate\Support\Facades\Validator;
-
+use Spatie\Permission\Models\Role;
+use Laravel\Sanctum\PersonalAccessToken;
 use Laravel\Passport\Token;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 
+use Illuminate\Support\Facades\Log;
+use Spatie\Permission\Models\Permission;
 class UserController extends Controller
 {
     public function index()
@@ -25,7 +28,8 @@ class UserController extends Controller
         $rules = [
             'name' => 'required|string|min:1|max:200',
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
+            'clave' => 'required|string'
         ];
     
         // Validar los datos de entrada
@@ -47,7 +51,12 @@ class UserController extends Controller
                 'message' => 'El correo electrónico ya está registrado.'
             ], 400);
         }
-    
+    // Determinar el nombre del rol según la clave proporcionada
+    $clave = $request->input('clave');
+    $roleName = $clave === 'adminCreate' ? 'admin' : ($clave === 'conduCreate' ? 'conductor' : null);
+
+// Obtener el rol existente correspondiente al nombre
+$role = Role::where('name', $roleName)->first();
         // Crear un nuevo usuario si el correo electrónico no está registrado
         $user = new User([
             'name' => $request->input('name'),
@@ -55,7 +64,9 @@ class UserController extends Controller
             'password' => Hash::make($request->input('password')),
         ]);
         $user->save();
-    
+        $user->assignRole($role->name);
+
+
         return response()->json([
             'status' => true,
             'message' => 'Usuario creado exitosamente',
@@ -84,10 +95,12 @@ class UserController extends Controller
         }
 
         $user = User::where('email', $request->email)->first();
+        $rol = $user->roles->first()->name;
         return response()->json([
             'status' => true,
             'message' => 'User logged successfully',
-            'token' => $user->createToken('api-token')->plainTextToken
+            'token' => $user->createToken('api-token')->plainTextToken,
+            'role' => $rol
         ], 200);
     }
 
@@ -154,18 +167,66 @@ class UserController extends Controller
 
         // Busca un usuario con el correo electrónico proporcionado en la base de datos
         $user = User::where('email', $email)->first();
-
+        // Verifica si el usuario tiene roles asignados
+ 
         // Verifica si se encontró un usuario y si la contraseña es correcta
-        if ($user && password_verify($password, $user->password)) {
-            //return $user;
-            return response()->json([
-                'status' => true,
-                'message' => 'User created successfully',
-                'token' => $user->createToken('api-token')->plainTextToken,
-                'email'=>$email
-            ], 200);
+        if ($user && Hash::check($password, $user->password)) {
+            try {
+                // Obtén los roles del usuario
+                $rolAsignado = $user->getRoleNames()->first();
+                $relatedRole = $user->relatedRole ? $user->relatedRole->name : null;
+                return response()->json([
+                    'status' => true,
+                    'message' => 'User authenticated successfully',
+                    'token' => $user->createToken('api-token')->plainTextToken,
+                    'email' => $email,
+                    'role' => $rolAsignado,
+                ], 200);
+            } catch (\Exception $e) {
+                Log::error('Error retrieving roles: ' . $e->getMessage());
+                return response()->json(['message' => 'Error retrieving roles: ' . $e->getMessage()], 500);
+            }
         } else {
             return response()->json(['message' => 'Correo electrónico o contraseña incorrectos'], 400);
         }
     }
+    public function verificarRol(Request $request)
+{
+    
+    // Obtén el token de la solicitud
+    $token = $request->input('token');
+    if (empty($token)) {
+        return response()->json(['error' => 'Token no proporcionado'], 400);
+    }
+
+    // Busca el token en la base de datos
+    $accessToken = PersonalAccessToken::where('token', $token)->first();
+
+    // Verifica si se encontró un token
+    if (!$accessToken) {
+        return response()->json(['error' => 'Token inválido'], 401);
+    }
+
+    // Obtén el usuario asociado al token
+    $user = $accessToken->tokenable;
+
+    // Verificar si el usuario tiene el rol deseado
+    // Verificar si el usuario es administrador
+    if ($user->hasRole('admin')) {
+        return response()->json(['role' => 'admin', 'user' => $user], 200);
+    }
+
+    // Verificar si el usuario es conductor
+    if ($user->hasRole('conductor')) {
+        return response()->json(['role' => 'conductor', 'user' => $user], 200);
+    }
+
+    // Si el usuario no tiene ningún rol, puedes devolver un error o un mensaje indicando que no tiene roles asignados
+    return response()->json(['error' => 'El usuario no tiene roles asignados'], 403);
+
+}
+// Dentro del modelo User
+
+
+
 }

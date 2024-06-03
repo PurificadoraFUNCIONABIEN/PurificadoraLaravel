@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/Carboy', [CarboyController::class, 'get
 Route::middleware('auth:sanctum')->get('/CarboyOrder', [CarboyOrderController::class, 'getUser']);
 Route::middleware('auth:sanctum')->get('/CarboyType', [CarboyTypeController::class, 'getUser']);
 
-//Route::middleware('auth:sanctum')->get('/Car', [CarController::class, 'getUser']);
+//Route::middleware('auth:sanctum')->get('/Car', [CarController::class]);
 
 Route::middleware('auth:sanctum')->get('/CarDriver', [CarDriverController::class, 'getUser']);
 
@@ -51,6 +51,7 @@ Route::middleware('auth:sanctum')->delete('/deleteCar/{id}', [CarController::cla
 Route::middleware('auth:sanctum')->put('/updateCar/{id}', [CarController::class, 'update']);
 //crear carro
 Route::middleware('auth:sanctum')->post('/createCar', [CarController::class, 'store']);
+Route::middleware('auth:sanctum')->post('/rol', [UserController::class, 'verificarRol']);
 
 
 
@@ -64,6 +65,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('carboy-types', CarboyTypeController::class);
     Route::apiResource('car-routes', CarRouteController::class);
     Route::apiResource('car-drivers', CarDriverController::class);
+    Route::apiResource('carros', CarController::class);
 });
 
 Route::middleware('auth:sanctum')->post('/createDriver', [DriverController::class, 'createDriver']);
