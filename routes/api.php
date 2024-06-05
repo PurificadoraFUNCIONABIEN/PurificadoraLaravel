@@ -14,7 +14,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RouteController;
-
+use App\Http\Controllers\pedidosController;
 
 //por luis se necesita token
 //Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getUser']);
@@ -66,6 +66,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('car-routes', CarRouteController::class);
     Route::apiResource('car-drivers', CarDriverController::class);
     Route::apiResource('carros', CarController::class);
+    Route::apiResource('pedidos', pedidosController::class);
+
 });
 
 Route::middleware('auth:sanctum')->post('/createDriver', [DriverController::class, 'createDriver']);
