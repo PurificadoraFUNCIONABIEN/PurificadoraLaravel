@@ -15,5 +15,10 @@ class Carboy extends Model
     public function carboyTypes(){
         return $this->belongsTo(CarboyType::class,'carboyType_id');
     }
-
+    public function pedidos()
+    {
+        return $this->belongsToMany(pedidos::class, 'pedido_producto')
+                    ->withPivot('cantidad')
+                    ->withTimestamps();
+    }
 }

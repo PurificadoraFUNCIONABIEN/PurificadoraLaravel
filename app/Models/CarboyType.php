@@ -18,5 +18,5 @@ class CarboyType extends Model
     public function carboys(){
         return $this->hasMany(Carboy::class);
     }
-
+  
 }
