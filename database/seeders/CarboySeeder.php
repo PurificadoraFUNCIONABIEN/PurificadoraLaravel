@@ -18,6 +18,7 @@ class CarboySeeder extends Seeder
             'state' => 'nuevo',
             'color' => 'rojo',
             'cantidad'=>15.7,
+            'img'=>'botes/fkpkGjbDl8.png',
             'carboyType_id'=>2,
 
         ]);
@@ -26,6 +27,7 @@ class CarboySeeder extends Seeder
             'state' => 'roto',
             'color' => 'verde',
             'cantidad'=>22.4,
+            'img'=>'botes/fkpkGjbDl8.png',
             'carboyType_id'=>1,
         ]);
     }
